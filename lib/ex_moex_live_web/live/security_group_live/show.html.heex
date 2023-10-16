@@ -1,0 +1,28 @@
+<.header>
+  Security group <%= @security_group.id %>
+  <:subtitle>This is a security_group record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/security_groups/#{@security_group}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit security_group</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Name"><%= @security_group.name %></:item>
+  <:item title="Title"><%= @security_group.title %></:item>
+  <:item title="Is hidden"><%= @security_group.is_hidden %></:item>
+</.list>
+
+<.back navigate={~p"/security_groups"}>Back to security_groups</.back>
+
+<.modal :if={@live_action == :edit} id="security_group-modal" show on_cancel={JS.patch(~p"/security_groups/#{@security_group}")}>
+  <.live_component
+    module={ExMoexLiveWeb.SecurityGroupLive.FormComponent}
+    id={@security_group.id}
+    title={@page_title}
+    action={@live_action}
+    security_group={@security_group}
+    patch={~p"/security_groups/#{@security_group}"}
+  />
+</.modal>

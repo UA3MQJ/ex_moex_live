@@ -1,0 +1,24 @@
+<.header>
+  Listing Durations
+</.header>
+
+<.table
+  id="durations"
+  rows={@streams.durations}
+>
+  <:col :let={{_id, duration}} label="Interval"><%= duration.interval %></:col>
+  <:col :let={{_id, duration}} label="Duration"><%= duration.duration %></:col>
+  <:col :let={{_id, duration}} label="Title"><%= duration.title %></:col>
+  <:col :let={{_id, duration}} label="Hint"><%= duration.hint %></:col>
+</.table>
+
+<.modal :if={@live_action in [:new, :edit]} id="duration-modal" show on_cancel={JS.patch(~p"/durations")}>
+  <.live_component
+    module={ExMoexLiveWeb.DurationLive.FormComponent}
+    id={@duration.id || :new}
+    title={@page_title}
+    action={@live_action}
+    duration={@duration}
+    patch={~p"/durations"}
+  />
+</.modal>

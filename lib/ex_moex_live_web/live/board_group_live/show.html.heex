@@ -1,0 +1,37 @@
+<.header>
+  Board group <%= @board_group.id %>
+  <:subtitle>This is a board_group record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/board_groups/#{@board_group}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit board_group</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Trade engine"><%= @board_group.trade_engine_id %></:item>
+  <:item title="Trade engine name"><%= @board_group.trade_engine_name %></:item>
+  <:item title="Trade engine title"><%= @board_group.trade_engine_title %></:item>
+  <:item title="Market"><%= @board_group.market_id %></:item>
+  <:item title="Market name"><%= @board_group.market_name %></:item>
+  <:item title="Name"><%= @board_group.name %></:item>
+  <:item title="Title"><%= @board_group.title %></:item>
+  <:item title="Is default"><%= @board_group.is_default %></:item>
+  <:item title="Board group"><%= @board_group.board_group_id %></:item>
+  <:item title="Is traded"><%= @board_group.is_traded %></:item>
+  <:item title="Is order driven"><%= @board_group.is_order_driven %></:item>
+  <:item title="Category"><%= @board_group.category %></:item>
+</.list>
+
+<.back navigate={~p"/board_groups"}>Back to board_groups</.back>
+
+<.modal :if={@live_action == :edit} id="board_group-modal" show on_cancel={JS.patch(~p"/board_groups/#{@board_group}")}>
+  <.live_component
+    module={ExMoexLiveWeb.BoardGroupLive.FormComponent}
+    id={@board_group.id}
+    title={@page_title}
+    action={@live_action}
+    board_group={@board_group}
+    patch={~p"/board_groups/#{@board_group}"}
+  />
+</.modal>

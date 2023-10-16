@@ -1,0 +1,27 @@
+<.header>
+  Engine <%= @engine.id %>
+  <:subtitle>This is a engine record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/engines/#{@engine}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit engine</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Name"><%= @engine.name %></:item>
+  <:item title="Title"><%= @engine.title %></:item>
+</.list>
+
+<.back navigate={~p"/engines"}>Back to engines</.back>
+
+<.modal :if={@live_action == :edit} id="engine-modal" show on_cancel={JS.patch(~p"/engines/#{@engine}")}>
+  <.live_component
+    module={ExMoexLiveWeb.EngineLive.FormComponent}
+    id={@engine.id}
+    title={@page_title}
+    action={@live_action}
+    engine={@engine}
+    patch={~p"/engines/#{@engine}"}
+  />
+</.modal>

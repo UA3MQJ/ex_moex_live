@@ -1,0 +1,38 @@
+<.header>
+  Listing Markets
+</.header>
+
+<.table
+  id="markets"
+  rows={@streams.markets}
+>
+  <:col :let={{_id, market}} label="Id"><%= market.id %></:col>
+  <:col :let={{_id, market}} label="Trade engine"><%= market.trade_engine_id %></:col>
+  <:col :let={{_id, market}} label="Trade engine name"><%= market.trade_engine_name %></:col>
+  <:col :let={{_id, market}} label="Trade engine title"><%= market.trade_engine_title %></:col>
+  <:col :let={{_id, market}} label="Market name"><%= market.market_name %></:col>
+  <:col :let={{_id, market}} label="Market title"><%= market.market_title %></:col>
+  <:col :let={{_id, market}} label="Market"><%= market.market_id %></:col>
+  <:col :let={{_id, market}} label="Marketplace"><%= market.marketplace %></:col>
+  <:col :let={{_id, market}} label="Is otc"><%= market.is_otc %></:col>
+  <:col :let={{_id, market}} label="Has history files"><%= market.has_history_files %></:col>
+  <:col :let={{_id, market}} label="Has history trades files"><%= market.has_history_trades_files %></:col>
+  <:col :let={{_id, market}} label="Has trades"><%= market.has_trades %></:col>
+  <:col :let={{_id, market}} label="Has history"><%= market.has_history %></:col>
+  <:col :let={{_id, market}} label="Has candles"><%= market.has_candles %></:col>
+  <:col :let={{_id, market}} label="Has orderbook"><%= market.has_orderbook %></:col>
+  <:col :let={{_id, market}} label="Has tradingsession"><%= market.has_tradingsession %></:col>
+  <:col :let={{_id, market}} label="Has extra yields"><%= market.has_extra_yields %></:col>
+  <:col :let={{_id, market}} label="Has delay"><%= market.has_delay %></:col>
+</.table>
+
+<.modal :if={@live_action in [:new, :edit]} id="market-modal" show on_cancel={JS.patch(~p"/markets")}>
+  <.live_component
+    module={ExMoexLiveWeb.MarketLive.FormComponent}
+    id={@market.id || :new}
+    title={@page_title}
+    action={@live_action}
+    market={@market}
+    patch={~p"/markets"}
+  />
+</.modal>

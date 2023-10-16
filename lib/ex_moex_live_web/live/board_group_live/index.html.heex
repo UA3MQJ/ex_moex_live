@@ -1,0 +1,33 @@
+<.header>
+  Listing Board groups
+</.header>
+
+<.table
+  id="board_groups"
+  rows={@streams.board_groups}
+>
+  <:col :let={{_id, board_group}} label="Id"><%= board_group.id %></:col>
+  <:col :let={{_id, board_group}} label="Trade engine"><%= board_group.trade_engine_id %></:col>
+  <:col :let={{_id, board_group}} label="Trade engine name"><%= board_group.trade_engine_name %></:col>
+  <:col :let={{_id, board_group}} label="Trade engine title"><%= board_group.trade_engine_title %></:col>
+  <:col :let={{_id, board_group}} label="Market"><%= board_group.market_id %></:col>
+  <:col :let={{_id, board_group}} label="Market name"><%= board_group.market_name %></:col>
+  <:col :let={{_id, board_group}} label="Name"><%= board_group.name %></:col>
+  <:col :let={{_id, board_group}} label="Title"><%= board_group.title %></:col>
+  <:col :let={{_id, board_group}} label="Is default"><%= board_group.is_default %></:col>
+  <:col :let={{_id, board_group}} label="Board group"><%= board_group.board_group_id %></:col>
+  <:col :let={{_id, board_group}} label="Is traded"><%= board_group.is_traded %></:col>
+  <:col :let={{_id, board_group}} label="Is order driven"><%= board_group.is_order_driven %></:col>
+  <:col :let={{_id, board_group}} label="Category"><%= board_group.category %></:col>
+</.table>
+
+<.modal :if={@live_action in [:new, :edit]} id="board_group-modal" show on_cancel={JS.patch(~p"/board_groups")}>
+  <.live_component
+    module={ExMoexLiveWeb.BoardGroupLive.FormComponent}
+    id={@board_group.id || :new}
+    title={@page_title}
+    action={@live_action}
+    board_group={@board_group}
+    patch={~p"/board_groups"}
+  />
+</.modal>

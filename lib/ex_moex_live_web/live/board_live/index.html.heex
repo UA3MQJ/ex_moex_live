@@ -1,0 +1,29 @@
+<.header>
+  Listing Boards
+</.header>
+
+<.table
+  id="boards"
+  rows={@streams.boards}
+>
+  <:col :let={{_id, board}} label="Id"><%= board.id %></:col>
+  <:col :let={{_id, board}} label="Board group"><%= board.board_group_id %></:col>
+  <:col :let={{_id, board}} label="Engine"><%= board.engine_id %></:col>
+  <:col :let={{_id, board}} label="Market"><%= board.market_id %></:col>
+  <:col :let={{_id, board}} label="Boardid"><%= board.boardid %></:col>
+  <:col :let={{_id, board}} label="Board title"><%= board.board_title %></:col>
+  <:col :let={{_id, board}} label="Is traded"><%= board.is_traded %></:col>
+  <:col :let={{_id, board}} label="Has candles"><%= board.has_candles %></:col>
+  <:col :let={{_id, board}} label="Is primary"><%= board.is_primary %></:col>
+</.table>
+
+<.modal :if={@live_action in [:new, :edit]} id="board-modal" show on_cancel={JS.patch(~p"/boards")}>
+  <.live_component
+    module={ExMoexLiveWeb.BoardLive.FormComponent}
+    id={@board.id || :new}
+    title={@page_title}
+    action={@live_action}
+    board={@board}
+    patch={~p"/boards"}
+  />
+</.modal>

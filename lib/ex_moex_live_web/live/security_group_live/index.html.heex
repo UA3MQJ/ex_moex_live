@@ -1,0 +1,24 @@
+<.header>
+  Listing Security groups
+</.header>
+
+<.table
+  id="security_groups"
+  rows={@streams.security_groups}
+>
+  <:col :let={{_id, security_group}} label="Id"><%= security_group.id %></:col>
+  <:col :let={{_id, security_group}} label="Name"><%= security_group.name %></:col>
+  <:col :let={{_id, security_group}} label="Title"><%= security_group.title %></:col>
+  <:col :let={{_id, security_group}} label="Is hidden"><%= security_group.is_hidden %></:col>
+</.table>
+
+<.modal :if={@live_action in [:new, :edit]} id="security_group-modal" show on_cancel={JS.patch(~p"/security_groups")}>
+  <.live_component
+    module={ExMoexLiveWeb.SecurityGroupLive.FormComponent}
+    id={@security_group.id || :new}
+    title={@page_title}
+    action={@live_action}
+    security_group={@security_group}
+    patch={~p"/security_groups"}
+  />
+</.modal>

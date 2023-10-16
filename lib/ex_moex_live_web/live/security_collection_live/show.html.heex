@@ -1,0 +1,28 @@
+<.header>
+  Security collection <%= @security_collection.id %>
+  <:subtitle>This is a security_collection record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/security_collections/#{@security_collection}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit security_collection</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Name"><%= @security_collection.name %></:item>
+  <:item title="Title"><%= @security_collection.title %></:item>
+  <:item title="Security group"><%= @security_collection.security_group_id %></:item>
+</.list>
+
+<.back navigate={~p"/security_collections"}>Back to security_collections</.back>
+
+<.modal :if={@live_action == :edit} id="security_collection-modal" show on_cancel={JS.patch(~p"/security_collections/#{@security_collection}")}>
+  <.live_component
+    module={ExMoexLiveWeb.SecurityCollectionLive.FormComponent}
+    id={@security_collection.id}
+    title={@page_title}
+    action={@live_action}
+    security_collection={@security_collection}
+    patch={~p"/security_collections/#{@security_collection}"}
+  />
+</.modal>

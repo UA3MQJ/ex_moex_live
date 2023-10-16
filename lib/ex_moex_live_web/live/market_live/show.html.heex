@@ -1,0 +1,42 @@
+<.header>
+  Market <%= @market.id %>
+  <:subtitle>This is a market record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/markets/#{@market}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit market</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Trade engine"><%= @market.trade_engine_id %></:item>
+  <:item title="Trade engine name"><%= @market.trade_engine_name %></:item>
+  <:item title="Trade engine title"><%= @market.trade_engine_title %></:item>
+  <:item title="Market name"><%= @market.market_name %></:item>
+  <:item title="Market title"><%= @market.market_title %></:item>
+  <:item title="Market"><%= @market.market_id %></:item>
+  <:item title="Marketplace"><%= @market.marketplace %></:item>
+  <:item title="Is otc"><%= @market.is_otc %></:item>
+  <:item title="Has history files"><%= @market.has_history_files %></:item>
+  <:item title="Has history trades files"><%= @market.has_history_trades_files %></:item>
+  <:item title="Has trades"><%= @market.has_trades %></:item>
+  <:item title="Has history"><%= @market.has_history %></:item>
+  <:item title="Has candles"><%= @market.has_candles %></:item>
+  <:item title="Has orderbook"><%= @market.has_orderbook %></:item>
+  <:item title="Has tradingsession"><%= @market.has_tradingsession %></:item>
+  <:item title="Has extra yields"><%= @market.has_extra_yields %></:item>
+  <:item title="Has delay"><%= @market.has_delay %></:item>
+</.list>
+
+<.back navigate={~p"/markets"}>Back to markets</.back>
+
+<.modal :if={@live_action == :edit} id="market-modal" show on_cancel={JS.patch(~p"/markets/#{@market}")}>
+  <.live_component
+    module={ExMoexLiveWeb.MarketLive.FormComponent}
+    id={@market.id}
+    title={@page_title}
+    action={@live_action}
+    market={@market}
+    patch={~p"/markets/#{@market}"}
+  />
+</.modal>

@@ -1,0 +1,32 @@
+<.header>
+  Security type <%= @security_type.id %>
+  <:subtitle>This is a security_type record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/security_types/#{@security_type}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit security_type</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Trade engine"><%= @security_type.trade_engine_id %></:item>
+  <:item title="Trade engine name"><%= @security_type.trade_engine_name %></:item>
+  <:item title="Trade engine title"><%= @security_type.trade_engine_title %></:item>
+  <:item title="Security type name"><%= @security_type.security_type_name %></:item>
+  <:item title="Security type title"><%= @security_type.security_type_title %></:item>
+  <:item title="Security group name"><%= @security_type.security_group_name %></:item>
+  <:item title="Stock type"><%= @security_type.stock_type %></:item>
+</.list>
+
+<.back navigate={~p"/security_types"}>Back to security_types</.back>
+
+<.modal :if={@live_action == :edit} id="security_type-modal" show on_cancel={JS.patch(~p"/security_types/#{@security_type}")}>
+  <.live_component
+    module={ExMoexLiveWeb.SecurityTypeLive.FormComponent}
+    id={@security_type.id}
+    title={@page_title}
+    action={@live_action}
+    security_type={@security_type}
+    patch={~p"/security_types/#{@security_type}"}
+  />
+</.modal>

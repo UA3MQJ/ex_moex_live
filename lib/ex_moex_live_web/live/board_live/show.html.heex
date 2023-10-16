@@ -1,0 +1,33 @@
+<.header>
+  Board <%= @board.id %>
+  <:subtitle>This is a board record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/boards/#{@board}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit board</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Board group"><%= @board.board_group_id %></:item>
+  <:item title="Engine"><%= @board.engine_id %></:item>
+  <:item title="Market"><%= @board.market_id %></:item>
+  <:item title="Boardid"><%= @board.boardid %></:item>
+  <:item title="Board title"><%= @board.board_title %></:item>
+  <:item title="Is traded"><%= @board.is_traded %></:item>
+  <:item title="Has candles"><%= @board.has_candles %></:item>
+  <:item title="Is primary"><%= @board.is_primary %></:item>
+</.list>
+
+<.back navigate={~p"/boards"}>Back to boards</.back>
+
+<.modal :if={@live_action == :edit} id="board-modal" show on_cancel={JS.patch(~p"/boards/#{@board}")}>
+  <.live_component
+    module={ExMoexLiveWeb.BoardLive.FormComponent}
+    id={@board.id}
+    title={@page_title}
+    action={@live_action}
+    board={@board}
+    patch={~p"/boards/#{@board}"}
+  />
+</.modal>

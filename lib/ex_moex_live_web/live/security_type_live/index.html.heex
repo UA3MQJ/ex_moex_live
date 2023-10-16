@@ -1,0 +1,28 @@
+<.header>
+  Listing Security types
+</.header>
+
+<.table
+  id="security_types"
+  rows={@streams.security_types}
+>
+  <:col :let={{_id, security_type}} label="Id"><%= security_type.id %></:col>
+  <:col :let={{_id, security_type}} label="Trade engine"><%= security_type.trade_engine_id %></:col>
+  <:col :let={{_id, security_type}} label="Trade engine name"><%= security_type.trade_engine_name %></:col>
+  <:col :let={{_id, security_type}} label="Trade engine title"><%= security_type.trade_engine_title %></:col>
+  <:col :let={{_id, security_type}} label="Security type name"><%= security_type.security_type_name %></:col>
+  <:col :let={{_id, security_type}} label="Security type title"><%= security_type.security_type_title %></:col>
+  <:col :let={{_id, security_type}} label="Security group name"><%= security_type.security_group_name %></:col>
+  <:col :let={{_id, security_type}} label="Stock type"><%= security_type.stock_type %></:col>
+</.table>
+
+<.modal :if={@live_action in [:new, :edit]} id="security_type-modal" show on_cancel={JS.patch(~p"/security_types")}>
+  <.live_component
+    module={ExMoexLiveWeb.SecurityTypeLive.FormComponent}
+    id={@security_type.id || :new}
+    title={@page_title}
+    action={@live_action}
+    security_type={@security_type}
+    patch={~p"/security_types"}
+  />
+</.modal>

@@ -1,0 +1,29 @@
+<.header>
+  Duration <%= @duration.duration %>
+  <:subtitle>This is a duration record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/durations/#{@duration}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit duration</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Interval"><%= @duration.interval %></:item>
+  <:item title="Duration"><%= @duration.duration %></:item>
+  <:item title="Title"><%= @duration.title %></:item>
+  <:item title="Hint"><%= @duration.hint %></:item>
+</.list>
+
+<.back navigate={~p"/durations"}>Back to durations</.back>
+
+<.modal :if={@live_action == :edit} id="duration-modal" show on_cancel={JS.patch(~p"/durations/#{@duration}")}>
+  <.live_component
+    module={ExMoexLiveWeb.DurationLive.FormComponent}
+    id={@duration.duration}
+    title={@page_title}
+    action={@live_action}
+    duration={@duration}
+    patch={~p"/durations/#{@duration}"}
+  />
+</.modal>

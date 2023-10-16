@@ -1,0 +1,24 @@
+<.header>
+  Listing Security collections
+</.header>
+
+<.table
+  id="security_collections"
+  rows={@streams.security_collections}
+>
+  <:col :let={{_id, security_collection}} label="Id"><%= security_collection.id %></:col>
+  <:col :let={{_id, security_collection}} label="Name"><%= security_collection.name %></:col>
+  <:col :let={{_id, security_collection}} label="Title"><%= security_collection.title %></:col>
+  <:col :let={{_id, security_collection}} label="Security group"><%= security_collection.security_group_id %></:col>
+</.table>
+
+<.modal :if={@live_action in [:new, :edit]} id="security_collection-modal" show on_cancel={JS.patch(~p"/security_collections")}>
+  <.live_component
+    module={ExMoexLiveWeb.SecurityCollectionLive.FormComponent}
+    id={@security_collection.id || :new}
+    title={@page_title}
+    action={@live_action}
+    security_collection={@security_collection}
+    patch={~p"/security_collections"}
+  />
+</.modal>
