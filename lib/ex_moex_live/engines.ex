@@ -8,15 +8,7 @@ defmodule ExMoexLive.Engines do
 
   alias ExMoexLive.Engines.Engine
 
-  def import(data) do
-    columns = data["columns"]
-    rows = data["data"]
-    Enum.map(rows, fn(row) ->
-      record = Enum.zip(columns, row) |> Enum.into(%{})
-      changeset = Engine.changeset(%Engine{}, record)
-      Repo.insert!(changeset, on_conflict: :nothing)
-    end)
-  end
+  def import(data), do: ExMoexLive.MOEX.Import.upsert_rows(data, Engine, :id)
 
   @doc """
   Returns the list of engines.
