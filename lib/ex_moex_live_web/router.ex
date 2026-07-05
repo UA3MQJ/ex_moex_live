@@ -19,6 +19,8 @@ defmodule ExMoexLiveWeb.Router do
 
     get "/", PageController, :home
 
+    live "/candles", CandleLive.Index, :index
+
     live "/boards", BoardLive.Index, :index
     live "/boards/new", BoardLive.Index, :new
     live "/boards/:id/edit", BoardLive.Index, :edit

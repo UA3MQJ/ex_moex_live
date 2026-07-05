@@ -7,6 +7,8 @@ defmodule ExMoexLive.Boards do
   alias ExMoexLive.Repo
 
   alias ExMoexLive.Boards.Board
+  alias ExMoexLive.Engines
+  alias ExMoexLive.Markets.Market
 
   def import(data) do
     columns = data["columns"]
@@ -29,6 +31,26 @@ defmodule ExMoexLive.Boards do
   """
   def list_boards do
     Repo.all(Board)
+  end
+
+  def list_candle_boards do
+    from(b in Board,
+      where: b.has_candles == 1,
+      order_by: [asc: fragment("CASE WHEN ? = 'TQBR' THEN 0 ELSE 1 END", b.boardid), asc: b.boardid]
+    )
+    |> Repo.all()
+  end
+
+  def candle_path(%Board{} = board) do
+    engine = Engines.get_engine!(board.engine_id)
+
+    market =
+      Repo.get_by!(Market,
+        market_id: board.market_id,
+        trade_engine_id: board.engine_id
+      )
+
+    {engine.name, market.market_name, board.boardid}
   end
 
   @doc """
