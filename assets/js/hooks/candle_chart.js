@@ -1,4 +1,4 @@
-import { createChart, CandlestickSeries, LineSeries } from "lightweight-charts"
+import { createChart, CandlestickSeries, LineSeries, createSeriesMarkers } from "lightweight-charts"
 
 const CandleChart = {
   mounted() {
@@ -75,6 +75,8 @@ const CandleChart = {
         close: c.close
       }))
     )
+
+    createSeriesMarkers(candleSeries, data.signals || [])
 
     this.chart.addPane()
     const rsiSeries = this.chart.addSeries(LineSeries, {

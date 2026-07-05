@@ -7,6 +7,7 @@ defmodule ExMoexLive.Indicators do
   @default_stoch_period 14
   @default_k_period 3
   @default_d_period 3
+  @default_lookback 5
 
   @doc """
   Computes RSI using Wilder's smoothing method.
@@ -91,6 +92,57 @@ defmodule ExMoexLive.Indicators do
   end
 
   @doc """
+  Detects bullish and bearish RSI divergences from pivot highs/lows.
+
+  Returns chart marker maps for Lightweight Charts.
+  """
+  def rsi_divergence_signals(candles, rsi_values, opts \\ []) do
+    lookback = Keyword.get(opts, :lookback, @default_lookback)
+    n = length(candles)
+
+    if n <= lookback * 2 do
+      []
+    else
+      pivot_highs = pivot_highs(candles, rsi_values, lookback, n)
+      pivot_lows = pivot_lows(candles, rsi_values, lookback, n)
+
+      bearish =
+        pivot_highs
+        |> consecutive_pairs()
+        |> Enum.filter(fn {prev, curr} ->
+          curr.price > prev.price and curr.rsi < prev.rsi
+        end)
+        |> Enum.map(fn {_prev, curr} ->
+          %{
+            time: curr.time,
+            position: "aboveBar",
+            color: "#ef5350",
+            shape: "arrowDown",
+            text: "Продажа"
+          }
+        end)
+
+      bullish =
+        pivot_lows
+        |> consecutive_pairs()
+        |> Enum.filter(fn {prev, curr} ->
+          curr.price < prev.price and curr.rsi > prev.rsi
+        end)
+        |> Enum.map(fn {_prev, curr} ->
+          %{
+            time: curr.time,
+            position: "belowBar",
+            color: "#26a69a",
+            shape: "arrowUp",
+            text: "Покупка"
+          }
+        end)
+
+      (bearish ++ bullish) |> Enum.sort_by(& &1.time)
+    end
+  end
+
+  @doc """
   Enriches candles with RSI14 and StochRSI indicator series.
 
   Returns a map suitable for JSON encoding and the chart hook.
@@ -104,7 +156,8 @@ defmodule ExMoexLive.Indicators do
       candles: candles,
       rsi: series(candles, rsi_values),
       stoch_k: series(candles, stoch_k),
-      stoch_d: series(candles, stoch_d)
+      stoch_d: series(candles, stoch_d),
+      signals: rsi_divergence_signals(candles, rsi_values)
     }
   end
 
@@ -143,5 +196,47 @@ defmodule ExMoexLive.Indicators do
       {_candle, nil} -> []
       {candle, value} -> [%{time: candle.time, value: Float.round(value * 1.0, 2)}]
     end)
+  end
+
+  defp pivot_highs(candles, rsi_values, lookback, n) do
+    for i <- lookback..(n - lookback - 1),
+        rsi = Enum.at(rsi_values, i),
+        is_number(rsi),
+        pivot_high?(candles, i, lookback) do
+      candle = Enum.at(candles, i)
+      %{time: candle.time, price: candle.high, rsi: rsi}
+    end
+  end
+
+  defp pivot_lows(candles, rsi_values, lookback, n) do
+    for i <- lookback..(n - lookback - 1),
+        rsi = Enum.at(rsi_values, i),
+        is_number(rsi),
+        pivot_low?(candles, i, lookback) do
+      candle = Enum.at(candles, i)
+      %{time: candle.time, price: candle.low, rsi: rsi}
+    end
+  end
+
+  defp pivot_high?(candles, i, lookback) do
+    high = Enum.at(candles, i).high
+
+    Enum.all?((i - lookback)..(i + lookback), fn j ->
+      j == i or Enum.at(candles, j).high < high
+    end)
+  end
+
+  defp pivot_low?(candles, i, lookback) do
+    low = Enum.at(candles, i).low
+
+    Enum.all?((i - lookback)..(i + lookback), fn j ->
+      j == i or Enum.at(candles, j).low > low
+    end)
+  end
+
+  defp consecutive_pairs(list) do
+    list
+    |> Enum.chunk_every(2, 1, :discard)
+    |> Enum.map(fn [prev, curr] -> {prev, curr} end)
   end
 end
