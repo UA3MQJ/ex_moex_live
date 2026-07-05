@@ -1,10 +1,16 @@
 <.header>
   Listing Markets
+  <:actions>
+    <.link patch={~p"/markets/new"}>
+      <.button>New Market</.button>
+    </.link>
+  </:actions>
 </.header>
 
 <.table
   id="markets"
   rows={@streams.markets}
+  row_click={fn {_id, market} -> JS.navigate(~p"/markets/#{market}") end}
 >
   <:col :let={{_id, market}} label="Id"><%= market.id %></:col>
   <:col :let={{_id, market}} label="Trade engine"><%= market.trade_engine_id %></:col>
@@ -24,6 +30,20 @@
   <:col :let={{_id, market}} label="Has tradingsession"><%= market.has_tradingsession %></:col>
   <:col :let={{_id, market}} label="Has extra yields"><%= market.has_extra_yields %></:col>
   <:col :let={{_id, market}} label="Has delay"><%= market.has_delay %></:col>
+  <:action :let={{_id, market}}>
+    <div class="sr-only">
+      <.link navigate={~p"/markets/#{market}"}>Show</.link>
+    </div>
+    <.link patch={~p"/markets/#{market}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{_id, market}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: market.id})}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
 </.table>
 
 <.modal :if={@live_action in [:new, :edit]} id="market-modal" show on_cancel={JS.patch(~p"/markets")}>

@@ -52,9 +52,12 @@ defmodule ExMoexLive.Durations do
 
   """
   def create_duration(attrs \\ %{}) do
-    %Duration{}
-    |> Duration.changeset(attrs)
-    |> Repo.insert()
+    with {:ok, duration} <-
+           %Duration{}
+           |> Duration.changeset(attrs)
+           |> Repo.insert() do
+      {:ok, get_duration!(duration.interval)}
+    end
   end
 
   @doc """
@@ -70,9 +73,12 @@ defmodule ExMoexLive.Durations do
 
   """
   def update_duration(%Duration{} = duration, attrs) do
-    duration
-    |> Duration.changeset(attrs)
-    |> Repo.update()
+    with {:ok, duration} <-
+           duration
+           |> Duration.changeset(attrs)
+           |> Repo.update() do
+      {:ok, get_duration!(duration.interval)}
+    end
   end
 
   @doc """

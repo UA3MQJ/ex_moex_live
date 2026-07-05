@@ -19,6 +19,7 @@ defmodule ExMoexLiveWeb.MarketLive.FormComponent do
         phx-change="validate"
         phx-submit="save"
       >
+        <.input :if={@action == :new} field={@form[:id]} type="number" label="Id" />
         <.input field={@form[:trade_engine_id]} type="number" label="Trade engine" />
         <.input field={@form[:trade_engine_name]} type="text" label="Trade engine name" />
         <.input field={@form[:trade_engine_title]} type="text" label="Trade engine title" />

@@ -21,7 +21,6 @@ defmodule ExMoexLiveWeb.DurationLive.FormComponent do
       >
         <.input field={@form[:interval]} type="number" label="Interval" />
         <.input field={@form[:duration]} type="number" label="Duration" />
-        # <.input field={@form[:days]} type="number" label="Days" />
         <.input field={@form[:title]} type="text" label="Title" />
         <.input field={@form[:hint]} type="text" label="Hint" />
         <:actions>

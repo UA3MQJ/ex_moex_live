@@ -7,6 +7,7 @@ defmodule ExMoexLive.BoardGroupsTest do
     alias ExMoexLive.BoardGroups.BoardGroup
 
     import ExMoexLive.BoardGroupsFixtures
+    import ExMoexLive.FixtureHelpers
 
     @invalid_attrs %{board_group_id: nil, category: nil, is_default: nil, is_order_driven: nil, is_traded: nil, market_id: nil, market_name: nil, name: nil, title: nil, trade_engine_id: nil, trade_engine_name: nil, trade_engine_title: nil}
 
@@ -21,7 +22,7 @@ defmodule ExMoexLive.BoardGroupsTest do
     end
 
     test "create_board_group/1 with valid data creates a board_group" do
-      valid_attrs = %{board_group_id: 42, category: "some category", is_default: 42, is_order_driven: 42, is_traded: 42, market_id: 42, market_name: "some market_name", name: "some name", title: "some title", trade_engine_id: 42, trade_engine_name: "some trade_engine_name", trade_engine_title: "some trade_engine_title"}
+      valid_attrs = %{id: unique_id(), board_group_id: 42, category: "some category", is_default: 42, is_order_driven: 42, is_traded: 42, market_id: 42, market_name: "some market_name", name: "some name", title: "some title", trade_engine_id: 42, trade_engine_name: "some trade_engine_name", trade_engine_title: "some trade_engine_title"}
 
       assert {:ok, %BoardGroup{} = board_group} = BoardGroups.create_board_group(valid_attrs)
       assert board_group.board_group_id == 42

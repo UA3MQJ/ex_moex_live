@@ -7,6 +7,7 @@ defmodule ExMoexLive.SecurityGroupsTest do
     alias ExMoexLive.SecurityGroups.SecurityGroup
 
     import ExMoexLive.SecurityGroupsFixtures
+    import ExMoexLive.FixtureHelpers
 
     @invalid_attrs %{is_hidden: nil, name: nil, title: nil}
 
@@ -21,7 +22,7 @@ defmodule ExMoexLive.SecurityGroupsTest do
     end
 
     test "create_security_group/1 with valid data creates a security_group" do
-      valid_attrs = %{is_hidden: 42, name: "some name", title: "some title"}
+      valid_attrs = %{id: unique_id(), is_hidden: 42, name: "some name", title: "some title"}
 
       assert {:ok, %SecurityGroup{} = security_group} = SecurityGroups.create_security_group(valid_attrs)
       assert security_group.is_hidden == 42

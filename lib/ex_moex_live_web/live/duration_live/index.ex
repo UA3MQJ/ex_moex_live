@@ -14,7 +14,7 @@ defmodule ExMoexLiveWeb.DurationLive.Index do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 
-  defp apply_action(socket, :edit, %{"duration" => duration}) do
+  defp apply_action(socket, :edit, %{"id" => duration}) do
     socket
     |> assign(:page_title, "Edit Duration")
     |> assign(:duration, Durations.get_duration!(duration))

@@ -4,6 +4,8 @@ defmodule ExMoexLive.BoardGroupsFixtures do
   entities via the `ExMoexLive.BoardGroups` context.
   """
 
+  import ExMoexLive.FixtureHelpers
+
   @doc """
   Generate a board_group.
   """
@@ -11,6 +13,7 @@ defmodule ExMoexLive.BoardGroupsFixtures do
     {:ok, board_group} =
       attrs
       |> Enum.into(%{
+        id: unique_id(),
         board_group_id: 42,
         category: "some category",
         is_default: 42,

@@ -19,6 +19,7 @@ defmodule ExMoexLiveWeb.SecurityCollectionLive.FormComponent do
         phx-change="validate"
         phx-submit="save"
       >
+        <.input :if={@action == :new} field={@form[:id]} type="number" label="Id" />
         <.input field={@form[:name]} type="text" label="Name" />
         <.input field={@form[:title]} type="text" label="Title" />
         <.input field={@form[:security_group_id]} type="number" label="Security group" />

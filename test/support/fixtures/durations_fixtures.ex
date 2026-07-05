@@ -4,21 +4,25 @@ defmodule ExMoexLive.DurationsFixtures do
   entities via the `ExMoexLive.Durations` context.
   """
 
+  import ExMoexLive.FixtureHelpers
+
   @doc """
   Generate a duration.
   """
   def duration_fixture(attrs \\ %{}) do
-    {:ok, duration} =
+    interval = Map.get(attrs, :interval) || unique_id()
+
+    attrs =
       attrs
       |> Enum.into(%{
         days: 42,
-        duration: 42,
+        duration: interval,
         hint: "some hint",
-        interval: 42,
+        interval: interval,
         title: "some title"
       })
-      |> ExMoexLive.Durations.create_duration()
 
-    duration
+    {:ok, _duration} = ExMoexLive.Durations.create_duration(attrs)
+    ExMoexLive.Durations.get_duration!(interval)
   end
 end

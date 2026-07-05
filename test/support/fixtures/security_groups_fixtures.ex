@@ -4,6 +4,8 @@ defmodule ExMoexLive.SecurityGroupsFixtures do
   entities via the `ExMoexLive.SecurityGroups` context.
   """
 
+  import ExMoexLive.FixtureHelpers
+
   @doc """
   Generate a security_group.
   """
@@ -11,6 +13,7 @@ defmodule ExMoexLive.SecurityGroupsFixtures do
     {:ok, security_group} =
       attrs
       |> Enum.into(%{
+        id: unique_id(),
         is_hidden: 42,
         name: "some name",
         title: "some title"

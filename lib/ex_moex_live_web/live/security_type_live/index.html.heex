@@ -1,10 +1,16 @@
 <.header>
   Listing Security types
+  <:actions>
+    <.link patch={~p"/security_types/new"}>
+      <.button>New Security type</.button>
+    </.link>
+  </:actions>
 </.header>
 
 <.table
   id="security_types"
   rows={@streams.security_types}
+  row_click={fn {_id, security_type} -> JS.navigate(~p"/security_types/#{security_type}") end}
 >
   <:col :let={{_id, security_type}} label="Id"><%= security_type.id %></:col>
   <:col :let={{_id, security_type}} label="Trade engine"><%= security_type.trade_engine_id %></:col>
@@ -14,6 +20,20 @@
   <:col :let={{_id, security_type}} label="Security type title"><%= security_type.security_type_title %></:col>
   <:col :let={{_id, security_type}} label="Security group name"><%= security_type.security_group_name %></:col>
   <:col :let={{_id, security_type}} label="Stock type"><%= security_type.stock_type %></:col>
+  <:action :let={{_id, security_type}}>
+    <div class="sr-only">
+      <.link navigate={~p"/security_types/#{security_type}"}>Show</.link>
+    </div>
+    <.link patch={~p"/security_types/#{security_type}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{_id, security_type}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: security_type.id})}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
 </.table>
 
 <.modal :if={@live_action in [:new, :edit]} id="security_type-modal" show on_cancel={JS.patch(~p"/security_types")}>

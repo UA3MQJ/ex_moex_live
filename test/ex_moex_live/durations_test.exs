@@ -7,6 +7,7 @@ defmodule ExMoexLive.DurationsTest do
     alias ExMoexLive.Durations.Duration
 
     import ExMoexLive.DurationsFixtures
+    import ExMoexLive.FixtureHelpers
 
     @invalid_attrs %{days: nil, duration: nil, hint: nil, interval: nil, title: nil}
 
@@ -17,17 +18,25 @@ defmodule ExMoexLive.DurationsTest do
 
     test "get_duration!/1 returns the duration with given id" do
       duration = duration_fixture()
-      assert Durations.get_duration!(duration.id) == duration
+      assert Durations.get_duration!(duration.interval) == duration
     end
 
     test "create_duration/1 with valid data creates a duration" do
-      valid_attrs = %{days: 42, duration: 42, hint: "some hint", interval: 42, title: "some title"}
+      interval = unique_id()
+
+      valid_attrs = %{
+        days: 42,
+        duration: interval,
+        hint: "some hint",
+        interval: interval,
+        title: "some title"
+      }
 
       assert {:ok, %Duration{} = duration} = Durations.create_duration(valid_attrs)
       assert duration.days == 42
-      assert duration.duration == 42
+      assert duration.duration == interval
       assert duration.hint == "some hint"
-      assert duration.interval == 42
+      assert duration.interval == interval
       assert duration.title == "some title"
     end
 
@@ -37,13 +46,14 @@ defmodule ExMoexLive.DurationsTest do
 
     test "update_duration/2 with valid data updates the duration" do
       duration = duration_fixture()
-      update_attrs = %{days: 43, duration: 43, hint: "some updated hint", interval: 43, title: "some updated title"}
+      interval = duration.interval
+      update_attrs = %{days: 43, duration: 43, hint: "some updated hint", title: "some updated title"}
 
       assert {:ok, %Duration{} = duration} = Durations.update_duration(duration, update_attrs)
       assert duration.days == 43
       assert duration.duration == 43
       assert duration.hint == "some updated hint"
-      assert duration.interval == 43
+      assert duration.interval == interval
       assert duration.title == "some updated title"
     end
 
@@ -56,7 +66,7 @@ defmodule ExMoexLive.DurationsTest do
     test "delete_duration/1 deletes the duration" do
       duration = duration_fixture()
       assert {:ok, %Duration{}} = Durations.delete_duration(duration)
-      assert_raise Ecto.NoResultsError, fn -> Durations.get_duration!(duration.id) end
+      assert_raise Ecto.NoResultsError, fn -> Durations.get_duration!(duration.interval) end
     end
 
     test "change_duration/1 returns a duration changeset" do

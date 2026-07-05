@@ -4,6 +4,8 @@ defmodule ExMoexLive.SecurityCollectionsFixtures do
   entities via the `ExMoexLive.SecurityCollections` context.
   """
 
+  import ExMoexLive.FixtureHelpers
+
   @doc """
   Generate a security_collection.
   """
@@ -11,6 +13,7 @@ defmodule ExMoexLive.SecurityCollectionsFixtures do
     {:ok, security_collection} =
       attrs
       |> Enum.into(%{
+        id: unique_id(),
         name: "some name",
         security_group_id: 42,
         title: "some title"

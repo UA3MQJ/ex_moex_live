@@ -7,6 +7,7 @@ defmodule ExMoexLive.SecurityTypesTest do
     alias ExMoexLive.SecurityTypes.SecurityType
 
     import ExMoexLive.SecurityTypesFixtures
+    import ExMoexLive.FixtureHelpers
 
     @invalid_attrs %{security_group_name: nil, security_type_name: nil, security_type_title: nil, stock_type: nil, trade_engine_id: nil, trade_engine_name: nil, trade_engine_title: nil}
 
@@ -21,7 +22,7 @@ defmodule ExMoexLive.SecurityTypesTest do
     end
 
     test "create_security_type/1 with valid data creates a security_type" do
-      valid_attrs = %{security_group_name: "some security_group_name", security_type_name: "some security_type_name", security_type_title: "some security_type_title", stock_type: "some stock_type", trade_engine_id: 42, trade_engine_name: "some trade_engine_name", trade_engine_title: "some trade_engine_title"}
+      valid_attrs = %{id: unique_id(), security_group_name: "some security_group_name", security_type_name: "some security_type_name", security_type_title: "some security_type_title", stock_type: "some stock_type", trade_engine_id: 42, trade_engine_name: "some trade_engine_name", trade_engine_title: "some trade_engine_title"}
 
       assert {:ok, %SecurityType{} = security_type} = SecurityTypes.create_security_type(valid_attrs)
       assert security_type.security_group_name == "some security_group_name"

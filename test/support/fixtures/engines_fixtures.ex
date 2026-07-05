@@ -4,6 +4,8 @@ defmodule ExMoexLive.EnginesFixtures do
   entities via the `ExMoexLive.Engines` context.
   """
 
+  import ExMoexLive.FixtureHelpers
+
   @doc """
   Generate a engine.
   """
@@ -11,6 +13,7 @@ defmodule ExMoexLive.EnginesFixtures do
     {:ok, engine} =
       attrs
       |> Enum.into(%{
+        id: unique_id(),
         name: "some name",
         title: "some title"
       })

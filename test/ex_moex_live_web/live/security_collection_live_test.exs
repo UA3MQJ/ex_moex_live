@@ -4,7 +4,7 @@ defmodule ExMoexLiveWeb.SecurityCollectionLiveTest do
   import Phoenix.LiveViewTest
   import ExMoexLive.SecurityCollectionsFixtures
 
-  @create_attrs %{name: "some name", security_group_id: 42, title: "some title"}
+  @create_attrs %{id: 900_001, name: "some name", security_group_id: 42, title: "some title"}
   @update_attrs %{name: "some updated name", security_group_id: 43, title: "some updated title"}
   @invalid_attrs %{name: nil, security_group_id: nil, title: nil}
 

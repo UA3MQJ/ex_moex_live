@@ -19,6 +19,7 @@ defmodule ExMoexLiveWeb.BoardLive.FormComponent do
         phx-change="validate"
         phx-submit="save"
       >
+        <.input :if={@action == :new} field={@form[:id]} type="number" label="Id" />
         <.input field={@form[:board_group_id]} type="number" label="Board group" />
         <.input field={@form[:engine_id]} type="number" label="Engine" />
         <.input field={@form[:market_id]} type="number" label="Market" />

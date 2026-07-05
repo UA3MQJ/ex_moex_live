@@ -7,6 +7,7 @@ defmodule ExMoexLive.EnginesTest do
     alias ExMoexLive.Engines.Engine
 
     import ExMoexLive.EnginesFixtures
+  import ExMoexLive.FixtureHelpers
 
     @invalid_attrs %{name: nil, title: nil}
 
@@ -21,7 +22,7 @@ defmodule ExMoexLive.EnginesTest do
     end
 
     test "create_engine/1 with valid data creates a engine" do
-      valid_attrs = %{name: "some name", title: "some title"}
+      valid_attrs = %{id: unique_id(), name: "some name", title: "some title"}
 
       assert {:ok, %Engine{} = engine} = Engines.create_engine(valid_attrs)
       assert engine.name == "some name"

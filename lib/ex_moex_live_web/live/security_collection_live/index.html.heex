@@ -1,15 +1,35 @@
 <.header>
   Listing Security collections
+  <:actions>
+    <.link patch={~p"/security_collections/new"}>
+      <.button>New Security collection</.button>
+    </.link>
+  </:actions>
 </.header>
 
 <.table
   id="security_collections"
   rows={@streams.security_collections}
+  row_click={fn {_id, security_collection} -> JS.navigate(~p"/security_collections/#{security_collection}") end}
 >
   <:col :let={{_id, security_collection}} label="Id"><%= security_collection.id %></:col>
   <:col :let={{_id, security_collection}} label="Name"><%= security_collection.name %></:col>
   <:col :let={{_id, security_collection}} label="Title"><%= security_collection.title %></:col>
   <:col :let={{_id, security_collection}} label="Security group"><%= security_collection.security_group_id %></:col>
+  <:action :let={{_id, security_collection}}>
+    <div class="sr-only">
+      <.link navigate={~p"/security_collections/#{security_collection}"}>Show</.link>
+    </div>
+    <.link patch={~p"/security_collections/#{security_collection}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{_id, security_collection}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: security_collection.id})}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
 </.table>
 
 <.modal :if={@live_action in [:new, :edit]} id="security_collection-modal" show on_cancel={JS.patch(~p"/security_collections")}>

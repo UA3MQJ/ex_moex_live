@@ -7,6 +7,7 @@ defmodule ExMoexLive.BoardsTest do
     alias ExMoexLive.Boards.Board
 
     import ExMoexLive.BoardsFixtures
+    import ExMoexLive.FixtureHelpers
 
     @invalid_attrs %{board_group_id: nil, board_title: nil, boardid: nil, engine_id: nil, has_candles: nil, is_primary: nil, is_traded: nil, market_id: nil}
 
@@ -21,7 +22,7 @@ defmodule ExMoexLive.BoardsTest do
     end
 
     test "create_board/1 with valid data creates a board" do
-      valid_attrs = %{board_group_id: 42, board_title: "some board_title", boardid: "some boardid", engine_id: 42, has_candles: 42, is_primary: 42, is_traded: 42, market_id: 42}
+      valid_attrs = %{id: unique_id(), board_group_id: 42, board_title: "some board_title", boardid: "some boardid", engine_id: 42, has_candles: 42, is_primary: 42, is_traded: 42, market_id: 42}
 
       assert {:ok, %Board{} = board} = Boards.create_board(valid_attrs)
       assert board.board_group_id == 42

@@ -4,7 +4,7 @@ defmodule ExMoexLiveWeb.BoardLiveTest do
   import Phoenix.LiveViewTest
   import ExMoexLive.BoardsFixtures
 
-  @create_attrs %{board_group_id: 42, board_title: "some board_title", boardid: "some boardid", engine_id: 42, has_candles: 42, is_primary: 42, is_traded: 42, market_id: 42}
+  @create_attrs %{id: 900_001, board_group_id: 42, board_title: "some board_title", boardid: "some boardid", engine_id: 42, has_candles: 42, is_primary: 42, is_traded: 42, market_id: 42}
   @update_attrs %{board_group_id: 43, board_title: "some updated board_title", boardid: "some updated boardid", engine_id: 43, has_candles: 43, is_primary: 43, is_traded: 43, market_id: 43}
   @invalid_attrs %{board_group_id: nil, board_title: nil, boardid: nil, engine_id: nil, has_candles: nil, is_primary: nil, is_traded: nil, market_id: nil}
 

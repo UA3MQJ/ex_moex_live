@@ -4,7 +4,7 @@ defmodule ExMoexLiveWeb.SecurityTypeLiveTest do
   import Phoenix.LiveViewTest
   import ExMoexLive.SecurityTypesFixtures
 
-  @create_attrs %{security_group_name: "some security_group_name", security_type_name: "some security_type_name", security_type_title: "some security_type_title", stock_type: "some stock_type", trade_engine_id: 42, trade_engine_name: "some trade_engine_name", trade_engine_title: "some trade_engine_title"}
+  @create_attrs %{id: 900_001, security_group_name: "some security_group_name", security_type_name: "some security_type_name", security_type_title: "some security_type_title", stock_type: "some stock_type", trade_engine_id: 42, trade_engine_name: "some trade_engine_name", trade_engine_title: "some trade_engine_title"}
   @update_attrs %{security_group_name: "some updated security_group_name", security_type_name: "some updated security_type_name", security_type_title: "some updated security_type_title", stock_type: "some updated stock_type", trade_engine_id: 43, trade_engine_name: "some updated trade_engine_name", trade_engine_title: "some updated trade_engine_title"}
   @invalid_attrs %{security_group_name: nil, security_type_name: nil, security_type_title: nil, stock_type: nil, trade_engine_id: nil, trade_engine_name: nil, trade_engine_title: nil}
 

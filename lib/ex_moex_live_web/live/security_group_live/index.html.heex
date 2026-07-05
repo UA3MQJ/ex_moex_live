@@ -1,15 +1,35 @@
 <.header>
   Listing Security groups
+  <:actions>
+    <.link patch={~p"/security_groups/new"}>
+      <.button>New Security group</.button>
+    </.link>
+  </:actions>
 </.header>
 
 <.table
   id="security_groups"
   rows={@streams.security_groups}
+  row_click={fn {_id, security_group} -> JS.navigate(~p"/security_groups/#{security_group}") end}
 >
   <:col :let={{_id, security_group}} label="Id"><%= security_group.id %></:col>
   <:col :let={{_id, security_group}} label="Name"><%= security_group.name %></:col>
   <:col :let={{_id, security_group}} label="Title"><%= security_group.title %></:col>
   <:col :let={{_id, security_group}} label="Is hidden"><%= security_group.is_hidden %></:col>
+  <:action :let={{_id, security_group}}>
+    <div class="sr-only">
+      <.link navigate={~p"/security_groups/#{security_group}"}>Show</.link>
+    </div>
+    <.link patch={~p"/security_groups/#{security_group}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{_id, security_group}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: security_group.id})}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
 </.table>
 
 <.modal :if={@live_action in [:new, :edit]} id="security_group-modal" show on_cancel={JS.patch(~p"/security_groups")}>

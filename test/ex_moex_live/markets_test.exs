@@ -7,6 +7,7 @@ defmodule ExMoexLive.MarketsTest do
     alias ExMoexLive.Markets.Market
 
     import ExMoexLive.MarketsFixtures
+    import ExMoexLive.FixtureHelpers
 
     @invalid_attrs %{has_candles: nil, has_delay: nil, has_extra_yields: nil, has_history: nil, has_history_files: nil, has_history_trades_files: nil, has_orderbook: nil, has_trades: nil, has_tradingsession: nil, is_otc: nil, market_id: nil, market_name: nil, market_title: nil, marketplace: nil, trade_engine_id: nil, trade_engine_name: nil, trade_engine_title: nil}
 
@@ -21,7 +22,7 @@ defmodule ExMoexLive.MarketsTest do
     end
 
     test "create_market/1 with valid data creates a market" do
-      valid_attrs = %{has_candles: 42, has_delay: 42, has_extra_yields: 42, has_history: 42, has_history_files: 42, has_history_trades_files: 42, has_orderbook: 42, has_trades: 42, has_tradingsession: 42, is_otc: 42, market_id: 42, market_name: "some market_name", market_title: "some market_title", marketplace: "some marketplace", trade_engine_id: 42, trade_engine_name: "some trade_engine_name", trade_engine_title: "some trade_engine_title"}
+      valid_attrs = %{id: unique_id(), has_candles: 42, has_delay: 42, has_extra_yields: 42, has_history: 42, has_history_files: 42, has_history_trades_files: 42, has_orderbook: 42, has_trades: 42, has_tradingsession: 42, is_otc: 42, market_id: 42, market_name: "some market_name", market_title: "some market_title", marketplace: "some marketplace", trade_engine_id: 42, trade_engine_name: "some trade_engine_name", trade_engine_title: "some trade_engine_title"}
 
       assert {:ok, %Market{} = market} = Markets.create_market(valid_attrs)
       assert market.has_candles == 42

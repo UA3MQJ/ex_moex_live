@@ -4,7 +4,7 @@ defmodule ExMoexLiveWeb.SecurityGroupLiveTest do
   import Phoenix.LiveViewTest
   import ExMoexLive.SecurityGroupsFixtures
 
-  @create_attrs %{is_hidden: 42, name: "some name", title: "some title"}
+  @create_attrs %{id: 900_001, is_hidden: 42, name: "some name", title: "some title"}
   @update_attrs %{is_hidden: 43, name: "some updated name", title: "some updated title"}
   @invalid_attrs %{is_hidden: nil, name: nil, title: nil}
 

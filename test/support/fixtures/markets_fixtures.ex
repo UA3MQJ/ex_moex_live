@@ -4,6 +4,8 @@ defmodule ExMoexLive.MarketsFixtures do
   entities via the `ExMoexLive.Markets` context.
   """
 
+  import ExMoexLive.FixtureHelpers
+
   @doc """
   Generate a market.
   """
@@ -11,6 +13,7 @@ defmodule ExMoexLive.MarketsFixtures do
     {:ok, market} =
       attrs
       |> Enum.into(%{
+        id: unique_id(),
         has_candles: 42,
         has_delay: 42,
         has_extra_yields: 42,

@@ -4,9 +4,9 @@ defmodule ExMoexLiveWeb.DurationLiveTest do
   import Phoenix.LiveViewTest
   import ExMoexLive.DurationsFixtures
 
-  @create_attrs %{days: 42, duration: 42, hint: "some hint", interval: 42, title: "some title"}
-  @update_attrs %{days: 43, duration: 43, hint: "some updated hint", interval: 43, title: "some updated title"}
-  @invalid_attrs %{days: nil, duration: nil, hint: nil, interval: nil, title: nil}
+  @create_attrs %{duration: 900_001, hint: "some hint", interval: 900_001, title: "some title"}
+  @update_attrs %{duration: 43, hint: "some updated hint", title: "some updated title"}
+  @invalid_attrs %{duration: nil, hint: nil, interval: nil, title: nil}
 
   defp create_duration(_) do
     duration = duration_fixture()
@@ -49,7 +49,7 @@ defmodule ExMoexLiveWeb.DurationLiveTest do
     test "updates duration in listing", %{conn: conn, duration: duration} do
       {:ok, index_live, _html} = live(conn, ~p"/durations")
 
-      assert index_live |> element("#durations-#{duration.id} a", "Edit") |> render_click() =~
+      assert index_live |> element("#durations-#{duration.interval} a", "Edit") |> render_click() =~
                "Edit Duration"
 
       assert_patch(index_live, ~p"/durations/#{duration}/edit")
@@ -59,7 +59,7 @@ defmodule ExMoexLiveWeb.DurationLiveTest do
              |> render_change() =~ "can&#39;t be blank"
 
       assert index_live
-             |> form("#duration-form", duration: @update_attrs)
+             |> form("#duration-form", duration: Map.put(@update_attrs, :interval, duration.interval))
              |> render_submit()
 
       assert_patch(index_live, ~p"/durations")
@@ -72,8 +72,8 @@ defmodule ExMoexLiveWeb.DurationLiveTest do
     test "deletes duration in listing", %{conn: conn, duration: duration} do
       {:ok, index_live, _html} = live(conn, ~p"/durations")
 
-      assert index_live |> element("#durations-#{duration.id} a", "Delete") |> render_click()
-      refute has_element?(index_live, "#durations-#{duration.id}")
+      assert index_live |> element("#durations-#{duration.interval} a", "Delete") |> render_click()
+      refute has_element?(index_live, "#durations-#{duration.interval}")
     end
   end
 
@@ -100,7 +100,7 @@ defmodule ExMoexLiveWeb.DurationLiveTest do
              |> render_change() =~ "can&#39;t be blank"
 
       assert show_live
-             |> form("#duration-form", duration: @update_attrs)
+             |> form("#duration-form", duration: Map.put(@update_attrs, :interval, duration.interval))
              |> render_submit()
 
       assert_patch(show_live, ~p"/durations/#{duration}")

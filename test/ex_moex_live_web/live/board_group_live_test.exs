@@ -4,7 +4,7 @@ defmodule ExMoexLiveWeb.BoardGroupLiveTest do
   import Phoenix.LiveViewTest
   import ExMoexLive.BoardGroupsFixtures
 
-  @create_attrs %{board_group_id: 42, category: "some category", is_default: 42, is_order_driven: 42, is_traded: 42, market_id: 42, market_name: "some market_name", name: "some name", title: "some title", trade_engine_id: 42, trade_engine_name: "some trade_engine_name", trade_engine_title: "some trade_engine_title"}
+  @create_attrs %{id: 900_001, board_group_id: 42, category: "some category", is_default: 42, is_order_driven: 42, is_traded: 42, market_id: 42, market_name: "some market_name", name: "some name", title: "some title", trade_engine_id: 42, trade_engine_name: "some trade_engine_name", trade_engine_title: "some trade_engine_title"}
   @update_attrs %{board_group_id: 43, category: "some updated category", is_default: 43, is_order_driven: 43, is_traded: 43, market_id: 43, market_name: "some updated market_name", name: "some updated name", title: "some updated title", trade_engine_id: 43, trade_engine_name: "some updated trade_engine_name", trade_engine_title: "some updated trade_engine_title"}
   @invalid_attrs %{board_group_id: nil, category: nil, is_default: nil, is_order_driven: nil, is_traded: nil, market_id: nil, market_name: nil, name: nil, title: nil, trade_engine_id: nil, trade_engine_name: nil, trade_engine_title: nil}
 

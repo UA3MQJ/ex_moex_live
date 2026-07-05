@@ -39,8 +39,8 @@ defmodule ExMoexLiveWeb.Router do
     live "/durations/new", DurationLive.Index, :new
     live "/durations/:id/edit", DurationLive.Index, :edit
 
-    # live "/durations/:id", DurationLive.Show, :show
-    # live "/durations/:id/show/edit", DurationLive.Show, :edit
+    live "/durations/:id", DurationLive.Show, :show
+    live "/durations/:id/show/edit", DurationLive.Show, :edit
 
     live "/engines", EngineLive.Index, :index
     live "/engines/new", EngineLive.Index, :new

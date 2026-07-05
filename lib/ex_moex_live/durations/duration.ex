@@ -2,14 +2,13 @@ defmodule ExMoexLive.Durations.Duration do
   use Ecto.Schema
   import Ecto.Changeset
 
-  # нет id в таблице!
-  @primary_key false
+  @primary_key {:interval, :integer, autogenerate: false}
+  @derive {Phoenix.Param, key: :interval}
   schema "durations" do
     field :id, :integer, virtual: true
     field :days, :integer
     field :duration, :integer
     field :hint, :string
-    field :interval, :integer
     field :title, :string
 
     timestamps(type: :utc_datetime)

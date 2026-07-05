@@ -4,7 +4,7 @@ defmodule ExMoexLiveWeb.EngineLiveTest do
   import Phoenix.LiveViewTest
   import ExMoexLive.EnginesFixtures
 
-  @create_attrs %{name: "some name", title: "some title"}
+  @create_attrs %{id: 900_001, name: "some name", title: "some title"}
   @update_attrs %{name: "some updated name", title: "some updated title"}
   @invalid_attrs %{name: nil, title: nil}
 

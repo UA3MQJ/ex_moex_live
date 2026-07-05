@@ -9,7 +9,7 @@ defmodule ExMoexLiveWeb.DurationLive.Show do
   end
 
   @impl true
-  def handle_params(%{"duration" => duration}, _, socket) do
+  def handle_params(%{"id" => duration}, _, socket) do
     {:noreply,
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))

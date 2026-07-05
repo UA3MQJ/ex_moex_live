@@ -7,6 +7,7 @@ defmodule ExMoexLive.SecurityCollectionsTest do
     alias ExMoexLive.SecurityCollections.SecurityCollection
 
     import ExMoexLive.SecurityCollectionsFixtures
+    import ExMoexLive.FixtureHelpers
 
     @invalid_attrs %{name: nil, security_group_id: nil, title: nil}
 
@@ -21,7 +22,7 @@ defmodule ExMoexLive.SecurityCollectionsTest do
     end
 
     test "create_security_collection/1 with valid data creates a security_collection" do
-      valid_attrs = %{name: "some name", security_group_id: 42, title: "some title"}
+      valid_attrs = %{id: unique_id(), name: "some name", security_group_id: 42, title: "some title"}
 
       assert {:ok, %SecurityCollection{} = security_collection} = SecurityCollections.create_security_collection(valid_attrs)
       assert security_collection.name == "some name"

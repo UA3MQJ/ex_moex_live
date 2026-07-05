@@ -1,10 +1,16 @@
 <.header>
   Listing Board groups
+  <:actions>
+    <.link patch={~p"/board_groups/new"}>
+      <.button>New Board group</.button>
+    </.link>
+  </:actions>
 </.header>
 
 <.table
   id="board_groups"
   rows={@streams.board_groups}
+  row_click={fn {_id, board_group} -> JS.navigate(~p"/board_groups/#{board_group}") end}
 >
   <:col :let={{_id, board_group}} label="Id"><%= board_group.id %></:col>
   <:col :let={{_id, board_group}} label="Trade engine"><%= board_group.trade_engine_id %></:col>
@@ -19,6 +25,20 @@
   <:col :let={{_id, board_group}} label="Is traded"><%= board_group.is_traded %></:col>
   <:col :let={{_id, board_group}} label="Is order driven"><%= board_group.is_order_driven %></:col>
   <:col :let={{_id, board_group}} label="Category"><%= board_group.category %></:col>
+  <:action :let={{_id, board_group}}>
+    <div class="sr-only">
+      <.link navigate={~p"/board_groups/#{board_group}"}>Show</.link>
+    </div>
+    <.link patch={~p"/board_groups/#{board_group}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{_id, board_group}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: board_group.id})}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
 </.table>
 
 <.modal :if={@live_action in [:new, :edit]} id="board_group-modal" show on_cancel={JS.patch(~p"/board_groups")}>

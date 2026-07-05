@@ -4,6 +4,8 @@ defmodule ExMoexLive.SecurityTypesFixtures do
   entities via the `ExMoexLive.SecurityTypes` context.
   """
 
+  import ExMoexLive.FixtureHelpers
+
   @doc """
   Generate a security_type.
   """
@@ -11,6 +13,7 @@ defmodule ExMoexLive.SecurityTypesFixtures do
     {:ok, security_type} =
       attrs
       |> Enum.into(%{
+        id: unique_id(),
         security_group_name: "some security_group_name",
         security_type_name: "some security_type_name",
         security_type_title: "some security_type_title",
