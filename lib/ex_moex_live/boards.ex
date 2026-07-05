@@ -10,15 +10,7 @@ defmodule ExMoexLive.Boards do
   alias ExMoexLive.Engines
   alias ExMoexLive.Markets.Market
 
-  def import(data) do
-    columns = data["columns"]
-    rows = data["data"]
-    Enum.map(rows, fn(row) ->
-      record = Enum.zip(columns, row) |> Enum.into(%{})
-      changeset = Board.changeset(%Board{}, record)
-      Repo.insert!(changeset, on_conflict: :nothing)
-    end)
-  end
+  def import(data), do: ExMoexLive.MOEX.Import.upsert_rows(data, Board, :id)
 
   @doc """
   Returns the list of boards.

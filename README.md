@@ -44,15 +44,20 @@ iex -S mix phx.server
 В консоли - команда чтобы импортировать справочники
 
 ```
-iex(3)> ExMoex.MOEX.Index.import
+iex(3)> ExMoexLive.MOEX.Index.import()
 ```
-После этого можно сходить в локальный http://localhost/browser/ pg_admin  юзер `user@domain.com` пароль `SuperSecret` (см docker-compose.yml) и поделать sql запросы в бд localhost:ex_moex_dev
+
+Повторный импорт безопасен: существующие записи пропускаются по primary key.
+
+После этого можно сходить в локальный http://localhost/browser/ pg_admin  юзер `user@domain.com` пароль `SuperSecret` (см docker-compose.yml) и поделать sql запросы в бд `ex_moex_live_dev` на localhost:5432
 
 # Links
 
 https://habr.com/ru/articles/759922/
 
-https://fs.moex.com/files/6523
+https://www.moex.com/files/4be999zbzp80bx2bgmwayrtyx0 (ISS API, EN)
+
+https://www.moex.com/files/4gspnsx9er8s7wg65ve3ccg1ch (ISS API, RU)
 
 https://iss.moex.com/iss/index.json
 

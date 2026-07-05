@@ -8,15 +8,7 @@ defmodule ExMoexLive.Durations do
 
   alias ExMoexLive.Durations.Duration
 
-  def import(data) do
-    columns = data["columns"]
-    rows = data["data"]
-    Enum.map(rows, fn(row) ->
-      record = Enum.zip(columns, row) |> Enum.into(%{})
-      changeset = Duration.changeset(%Duration{}, record)
-      Repo.insert!(changeset, on_conflict: :nothing, returning: false)
-    end)
-  end
+  def import(data), do: ExMoexLive.MOEX.Import.upsert_rows(data, Duration, :interval)
 
   @doc """
   Returns the list of durations.

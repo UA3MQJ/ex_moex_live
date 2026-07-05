@@ -8,15 +8,7 @@ defmodule ExMoexLive.SecurityTypes do
 
   alias ExMoexLive.SecurityTypes.SecurityType
 
-  def import(data) do
-    columns = data["columns"]
-    rows = data["data"]
-    Enum.map(rows, fn(row) ->
-      record = Enum.zip(columns, row) |> Enum.into(%{})
-      changeset = SecurityType.changeset(%SecurityType{}, record)
-      Repo.insert!(changeset, on_conflict: :nothing)
-    end)
-  end
+  def import(data), do: ExMoexLive.MOEX.Import.upsert_rows(data, SecurityType, :id)
 
   @doc """
   Returns the list of security_types.
